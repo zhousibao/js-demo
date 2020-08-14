@@ -5,6 +5,11 @@ module.exports = {
     es6: true,
     node: true
   },
+  parserOptions: {
+    sourceType: 'module',
+    parser: 'babel-eslint',
+  },
+  extends: ['standard'],
   rules: {
     "indent": ["error", 2],
     'no-console': 'off',
@@ -32,7 +37,4 @@ module.exports = {
       objectsInObjects: false
     }],
   },
-
-  parserOptions: {
-  }
 };
