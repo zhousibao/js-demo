@@ -1,26 +1,41 @@
+/**
+ * @description 数组去重
+ * @description 字符串去重
+ */
+
+
 // 普通方法
 var arr = [2, 3, 4, 4, 5, 2, 3, 6]
+var arr0 = []
 var arr1 = []
 for (const i of arr) {
-  if (arr1.indexOf(i) < 0) { // 或是使用includes方法
+  // indexOf()
+  if (arr0.indexOf(i) < 0) {
+    arr0.push(i)
+  }
+  // includes()
+  if (!arr1.includes(i)) {
     arr1.push(i)
   }
 }
+console.log('arr0:', arr0)
 console.log('arr1:', arr1)
 
-// 利用Set结构去重、
+
+// 利用Set结构去重
 const arr2 = [...new Set(arr)]
-console.log('arr2:', arr2)
 const arr3 = Array.from(new Set(arr))
+console.log('arr2:', arr2)
 console.log('arr3:', arr3)
 
-// 字符串去重
-const arr4 = [...new Set('ababbc')].join('')
-console.log('arr4:', arr4)
+
+// 字符串去重 // 转化程数组 => 去重 => 转换成字符串
+const str = [...new Set('ababbc')].join('')
+console.log('str:', str)
 
 
-var a = new Set([1, 2, 3])
-var b = new Set([4, 3, 2])
+var a = new Set([1, 2, 3, 2])
+var b = new Set([4, 3, 2, 3])
 // 数组并集
 var bing = [...new Set([...a, ...b])]
 console.log('bing:', bing)
