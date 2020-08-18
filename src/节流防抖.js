@@ -1,5 +1,6 @@
 /**
- * @description 节流函数
+ * @description 节流函数：让某个函数在一定时间间隔内只执行一次。
+ * 适用于函数被频繁调用的场景，例如：window.onresize()事件、mousemove事件、上传进度等情况。
  * @param fn 需要处理的函数
  * @param delay 节流时间
  */
@@ -38,7 +39,8 @@ setInterval(fn2, 10)
 
 
 /**
- * @description 防抖函数
+ * @description 防抖函数：某个函数在某段时间内，无论触发了多少次回调，都只执行最后一次。
+ * 适用于场景，例如：input事件n秒后触发请求、scroll事件多少秒后出他其他事件。
  * @param {function} fn 需要处理的函数
  * @param {number} delay 防抖时间
  * @param {boolean} immediate 是否立即执行一次
