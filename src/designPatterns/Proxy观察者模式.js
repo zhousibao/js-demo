@@ -35,14 +35,14 @@ const Observer = obj => new Proxy(obj, handle)
 const obj = {
   name: '张三',
   age: 20,
+  getName: function () {
+    console.log(this.name)
+  },
 }
 function print (target) {
   console.log(`print: ${target.name}, ${target.age}`)
 }
-function write (target) {
-  console.log(`write: ${target.name}, ${target.age}`)
-}
 const person = Observer(obj)
 addAction(print)
-addAction(write)
 person.name = '李四'
+person.getName() // 注意getName触发了两次拦截，一次获取getName、一次获取name
