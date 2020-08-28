@@ -11,6 +11,7 @@ module.exports = {
   },
   extends: ['standard'],
   rules: {
+    // 0允许 1警告 2错误
     "indent": ["error", 2],
     'no-console': 'off',
     'no-debugger': 'off',
@@ -36,5 +37,10 @@ module.exports = {
     'object-curly-spacing': [2, 'always', {
       objectsInObjects: false
     }],
+
+    // 禁止对 String，Number 和 Boolean 使用 new 操作符
+    'no-new-wrappers':0,
+    // 禁止直接调用 Object.prototypes 的内置属性
+    'no-prototype-builtins':0
   },
 };

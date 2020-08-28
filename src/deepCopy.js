@@ -60,7 +60,6 @@ function deepCopy (obj) {
 
   const result = Array.isArray(obj) ? [] : {}
   for (const key in obj) {
-    // eslint-disable-next-line no-prototype-builtins
     if (obj.hasOwnProperty(key)) {
       result[key] = deepCopy(obj[key]) // 递归复制
     }
