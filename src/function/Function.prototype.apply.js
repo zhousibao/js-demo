@@ -2,8 +2,8 @@
  * Function.prototype.apply(thisArg, [argsArray])
  * 方法使用一个指定的 thisArg 值, 以及作为一个数组的参数
  *
- * @实现对象的继承
  * @改变函数的上下文环境
+ * @实现对象的继承
  * @立即执行
  */
 
