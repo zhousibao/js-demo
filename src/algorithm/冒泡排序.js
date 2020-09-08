@@ -32,7 +32,8 @@ function bubbleSort (nums) {
   return nums
 }
 
-var nums = [1, 4, 5, 3, 2, 1, 2, 3, 0, 3, 2]
+// var nums = [1, 4, 5, 3, 2, 1, 2, 3, 0, 3, 2]
+var nums = [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
 console.time('time')
 console.log('nums', bubbleSort(nums))
 console.timeEnd('time')
