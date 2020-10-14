@@ -24,7 +24,6 @@ const a1 = new A('zhou')
 const a2 = new A('pan')
 console.log(a1 === a2) // true
 
-
 /**
  * @借助闭包
  */
