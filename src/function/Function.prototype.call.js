@@ -9,7 +9,7 @@
 
 // eslint-disable-next-line
 Function.prototype._call = function (thisArg) {
-  const context = thisArg || window
+  const context = thisArg || window // 非严格模式下
   context.fn = this // this表示当前函数
   const args = [...arguments].slice(1) // 得到其他参数
   const result = context.fn(...args)
