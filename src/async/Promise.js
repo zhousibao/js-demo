@@ -6,8 +6,10 @@
  * 1、有三个状态：Pending进行中、Fulfilled已成功、Rejected已失败。外界无法改变状态，一旦改变无法再改变。
  * 2、构造函数接收 executor 函数作为参数
  * 3、构造函数中有 resolve 和 reject 内置方法，并作为参数传递给 executor 函数。
- * 4、实例方法then: 微任务队列、支持链式调用
- * 5、实例方法catch: 就是then(null, onRejected)的别名
+ * 4、Promise.then(): 微任务队列、支持链式调用
+ * 5、Promise.catch(): 就是then(null, onRejected)的别名
+ * 6、Promise.all(promises): 所有都成功返回结果数组，有一个失败即返回失败信息
+ * 7、Promise.race(promises): 返回第一个改变状态的结果
  */
 
 // 用Symbol定义三种状态，防止外界改变状态。
@@ -148,6 +150,46 @@ class _Promise {
   static reject (param) {
     return new _Promise((resolve, reject) => {
       reject(param)
+    })
+  }
+
+  // all静态方法
+  static all (promises) {
+    promises = Array.from(promises) // 将参数promises转为一个真正的数组
+    return new _Promise((resolve, reject) => {
+      const value = []
+      const length = promises.length
+      if (length > 0) {
+        for (let i = 0; i < length; i++) {
+          _Promise.resolve(promises[i]).then(res => {
+            value.push(res)
+            if (length === i) {
+              resolve(value)
+            }
+          }, err => {
+            reject(err)
+          })
+        }
+      } else {
+        resolve(value)
+      }
+    })
+  }
+
+  // race静态方法
+  static race (promises) {
+    promises = Array.from(promises) // 将参数promises转为一个真正的数组
+    return new _Promise((resolve, reject) => {
+      const length = promises.length
+      if (length > 0) {
+        for (const promise of promises) {
+          _Promise.resolve(promise).then(res => {
+            resolve(res)
+          }, err => {
+            reject(err)
+          })
+        }
+      }
     })
   }
 }
