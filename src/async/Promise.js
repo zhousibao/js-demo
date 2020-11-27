@@ -125,6 +125,31 @@ class _Promise {
   catch (onRejected) {
     this.then(null, onRejected)
   }
+
+  // resolve静态方法
+  static resolve (param) {
+    if (param instanceof _Promise) {
+      return param
+    }
+
+    return new _Promise((resolve, reject) => {
+      if (param && Object.prototype.toString.call(param) === '[object Object]' &&
+      typeof param.then === 'function') {
+        setTimeout(() => {
+          param.then(resolve, reject)
+        }, 0)
+      } else {
+        resolve(param)
+      }
+    })
+  }
+
+  // reject静态方法
+  static reject (param) {
+    return new _Promise((resolve, reject) => {
+      reject(param)
+    })
+  }
 }
 
 
