@@ -1,5 +1,5 @@
 /**
- * @深度遍历
+ * @深度遍历  depth first search
  */
 
 // 递归方法
@@ -37,7 +37,7 @@ const dfsStack = node => {
 
 
 /**
- * @广度遍历
+ * @广度遍历 breadth first search
  */
 // 队列方法 // 先进先出
 const bfs = node => {

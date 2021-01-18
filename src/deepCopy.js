@@ -31,7 +31,8 @@ const obj = {
   g: function () {},
   h: Symbol('h'),
 }
-console.log('obj:', obj)
+obj.obj = obj
+// console.log('obj:', obj)rm
 
 /**
  * @利用JSON方法 简单暴力
@@ -41,29 +42,131 @@ console.log('obj:', obj)
  * @缺点 new Date()转换结果不一致。//浏览器环境
  * @缺点 循环引用情况下，会报错。
  */
-function deepCopyJson (obj) {
-  return JSON.parse(JSON.stringify(obj))
-}
-console.log(deepCopyJson(obj))
+// function deepCopyJson (obj) {
+//   return JSON.parse(JSON.stringify(obj))
+// }
+// console.log(deepCopyJson(obj))
+
 
 
 /**
  * @利用递归方法完成深拷贝方法
  */
 function deepCopy (obj) {
-  if (typeof obj !== 'object' || obj === null) {
-    return obj
-  }
-  if ((obj instanceof Date) || obj instanceof RegExp) {
-    return obj
+  const map = new Map() // 记录出现过的对象，用于处理循环引用
+
+  function copy(obj){
+    map.set(obj, obj);
+
+    if (typeof obj !== 'object' || obj === null) {
+      return obj
+    }
+    if ((obj instanceof Date) || obj instanceof RegExp) {
+      return obj
+    }
+
+    const result = Array.isArray(obj) ? [] : {}
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        // 处理循环引用
+        if(map.has(obj[key])){
+          result[key] = map.get(obj[key]);
+          continue;
+        }
+        
+        result[key] = deepCopy(obj[key]) // 递归复制
+      }
+    }
+    return result
   }
 
-  const result = Array.isArray(obj) ? [] : {}
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      result[key] = deepCopy(obj[key]) // 递归复制
+  return copy(obj)
+}
+// console.log('deepCopy', deepCopy(obj))
+
+
+
+/**
+ * @description 深度遍历实现深拷贝
+ */
+function deepCopyDFS(obj){
+  const stack = [] // 使用栈的特性，后进先出
+  const map = new Map() // 记录出现过的对象，用于处理循环引用
+
+  function getEmpty(o){
+    if(Object.prototype.toString.call(o) === '[object Object]')  return {}
+    if(Object.prototype.toString.call(o) === '[object Array]') return []
+    return o
+  }
+  
+  const result = getEmpty(obj)
+  // 判断返回的对象和原有对象是否相同就可以知道是否需要继续深拷贝
+	if(result !== obj){
+		stack.push([obj, result]);
+		map.set(obj, result);
+  }
+  
+  // 
+  while(stack.length){
+    let [o, res] = stack.pop()
+    for(let key in o){
+      // 处理循环引用
+      if(map.has(o[key])){
+        res[key] = map.get(o[key])
+        continue
+      }
+
+      res[key] = getEmpty(o[key])
+      if(res[key] !== o[key]){
+				stack.push([o[key], res[key]]);
+				map.set(o[key], res[key]);
+			}
     }
   }
   return result
 }
-console.log(deepCopy(obj))
+console.log('deepCopyDFS', deepCopyDFS(obj))
+
+
+
+
+/**
+ * @description 广度遍历实现深拷贝
+ */
+function deepCopyBFS(obj){
+  const queue = [] // 使用队列的特性，先进先出
+  const map = new Map() // 记录出现过的对象，用于处理循环引用
+
+  function getEmpty(o){
+    if(Object.prototype.toString.call(o) === '[object Object]')  return {}
+    if(Object.prototype.toString.call(o) === '[object Array]') return []
+    return o
+  }
+  
+  const result = getEmpty(obj)
+  // 判断返回的对象和原有对象是否相同就可以知道是否需要继续深拷贝
+	if(result !== obj){
+		queue.push([obj, result]);
+		map.set(obj, result);
+  }
+  
+  // 
+  while(queue.length){
+    let [o, res] = queue.shift()
+    for(let key in o){
+      // 处理循环引用
+      if(map.has(o[key])){
+        res[key] = map.get(o[key])
+        continue
+      }
+
+      res[key] = getEmpty(o[key])
+      if(res[key] !== o[key]){
+				queue.push([o[key], res[key]]);
+				map.set(o[key], res[key]);
+			}
+    }
+  }
+  return result
+}
+console.log('deepCopyBFS', deepCopyBFS(obj))
