@@ -5,39 +5,42 @@
   <meta name="viewport" content="width=device-width">
 </head>
 <body>
-<my-component
-  title="这是标题"
-  content="这是内容这是内容这是内容这是内容这是内容这是内容"
-></my-component>
-  
+<my-component>
+  <div slot="left">left</div>
+  <div slot="right">right</div>
+  <div>content</div>
+</my-component>
 <template id="template">
   <style>
    :host {
      display: flex;
      align-items: center;
-     width: 450px;
+     width: 480px;
      height: 180px;
      background-color: #ccc;
      border-radius: 8px;
    }
    .container {
-     margin: 20px;
-     height: 150px;
+     display: flex;
    }
-   .container > .title {
+   .container > .con {
+     height: 100px;
+     width: 100px;
+     flex-grow: 1;
      font-size: 24px;
-     line-height: 30px;
-     margin-bottom: 15px;
-   }
-   .container > .content {
-     padding: 10px;
-     font-size: 14px;
    }
   </style>
   
   <div class="container">
-    <p class="title"></p>
-    <p class="content"></p>
+    <p class="con">
+      <slot name="left"></slot>
+    </p>
+    <p class="con">
+      <slot></slot>
+    </p>
+    <p class="con">
+      <slot name="right"></slot>
+    </p>
   </div>
 </template>
 
@@ -47,12 +50,8 @@ class MyComponent extends HTMLElement {
   constructor() {
     super();
     var shadow = this.attachShadow( { mode: 'closed' } );
-    
     var template = document.getElementById('template');
     var content = template.content.cloneNode(true);
-    content.querySelector('.container>.title').innerText = this.getAttribute('title');
-    content.querySelector('.container>.content').innerText = this.getAttribute('content');
-
     shadow.appendChild(content);
   }
 }
