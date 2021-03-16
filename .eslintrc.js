@@ -44,6 +44,8 @@ module.exports = {
     'no-prototype-builtins':0,
     // 禁用 __proto__ 属性
     'no-proto':0,
+    // 允许使用表达式
+   'no-unused-expressions':0
 
 
 
