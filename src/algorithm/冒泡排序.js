@@ -16,9 +16,10 @@
 
 function bubbleSort (nums) {
   const max = nums.length - 1
+  if(max < 1) return nums // 小于两位直接返回
+  // 声明一个变量，作为标志位
+  let done = true
   for (var i = 0; i < max; i++) {
-    // 声明一个变量，作为标志位
-    var done = true
     for (var j = 0; j < max - i; j++) {
       if (nums[j] > nums[j + 1]) {
         [nums[j], nums[j + 1]] = [nums[j + 1], nums[j]]
