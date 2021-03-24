@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>事件冒泡</title>
+</head>
+<body>
+  <div id="parent">
+    我是父元素
+    <span id="son">我是子元素</span>
+  </div>
+</body>
+</html>
+<script type="text/javascript">
+var parent = document.getElementById('parent');
+var son = document.getElementById('son');
+
+parent.addEventListener('click', () => {
+  alert('父级 冒泡');
+}, false);
+parent.addEventListener('click', () => {
+  alert('父级 捕获');
+}, true);
+son.addEventListener('click', () => {
+  alert('子级捕获');
+}, true);
+son.addEventListener('click', () => {
+  alert('子级冒泡');
+}, false);
+// 1、当点击父元素：父级冒泡 -> 父级捕获
+// 2、当点击子元素：父级捕获 -> 子级捕获 ->  子级冒泡 -> 父级冒泡
+// 总结，事件流的执行顺序是：事件捕获阶 -> 处于目标阶段 -> 事件冒泡阶段，
+// 且当事件处于目标阶段时，事件调用顺序决定于绑定事件的书写顺序。
+</script>
